@@ -1,0 +1,15 @@
+plugins {
+	id 'java-gradle-plugin'
+}
+
+group = 'com.sidneysimmons'
+version = '1.0'
+
+gradlePlugin {
+    plugins {
+        greetingPlugin {
+            id = "${project.group}.${project.name}"
+            implementationClass = 'com.sidneysimmons.gradleplugindocker.DockerPlugin'
+        }
+    }
+}

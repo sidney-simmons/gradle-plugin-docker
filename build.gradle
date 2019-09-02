@@ -1,14 +1,23 @@
 plugins {
+	id "com.gradle.plugin-publish" version "0.10.1"
 	id 'java-gradle-plugin'
 }
 
 group = 'com.sidneysimmons'
-version = '1.0.0'
+version = '0.0.1'
+
+pluginBundle {
+	website = 'https://github.com/sidney-simmons/gradle-plugin-docker'
+	vcsUrl = 'https://github.com/sidney-simmons/gradle-plugin-docker'
+	tags = ['docker', 'docker-compose']
+}
 
 gradlePlugin {
     plugins {
-        greetingPlugin {
-            id = "${project.group}.${project.name}"
+        dockerPlugin {
+            id = 'com.sidneysimmons.gradle-plugin-docker'
+			displayName = 'Docker Plugin' 
+			description = 'gradle-plugin-docker is a custom gradle plugin for integrating with Docker.' 
             implementationClass = 'com.sidneysimmons.gradleplugindocker.DockerPlugin'
         }
     }

@@ -14,17 +14,24 @@ dockerVersion - Prints system docker version.
 ## Usage
 
 #### Via Gradle Plugin Portal
-TODO
+
+Use the published plugin by setting the following in your project's build file.  You can find the latest version [here](https://plugins.gradle.org/plugin/com.sidneysimmons.gradle-plugin-docker).
+
+```
+plugins {
+    id 'com.sidneysimmons.gradle-plugin-docker' version '[LATEST VERSION]'
+}
+```
 
 #### Via Local Build
 Clone the repository and execute `gradlew build`.  This will build the plugin jar and place it in the `build/libs` directory.
 
-Add the local plugin to your own project by setting the following in your project's build file.
+Use the local plugin in your own project by setting the following in your project's build file.
 
 ```
 buildscript {
     dependencies {
-        classpath files('[YOUR PATH]/gradle-plugin-docker/build/libs/gradle-plugin-docker-[CURRENT VERSION].jar')
+        classpath files('[YOUR PATH]/gradle-plugin-docker/build/libs/gradle-plugin-docker-[LATEST VERSION].jar')
     }
 }
 apply plugin: com.sidneysimmons.gradleplugindocker.DockerPlugin

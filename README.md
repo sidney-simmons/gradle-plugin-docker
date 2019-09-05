@@ -38,12 +38,12 @@ plugins {
 
 ```
 pluginManagement {
-	repositories {
-		maven {
-			url '[PLUGIN PROJECT ROOT]/build/test-maven-repo'
-		}
-		gradlePluginPortal()
-	}
+    repositories {
+        maven {
+            url '[PLUGIN PROJECT ROOT]/build/test-maven-repo'
+        }
+        gradlePluginPortal()
+    }
 }
 ```
 

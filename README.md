@@ -24,17 +24,27 @@ plugins {
 ```
 
 #### Via Local Build
-Clone the repository and execute `gradlew build`.  This will build the plugin jar and place it in the `build/libs` directory.
+Clone the repository and execute `gradlew build`.  Then execute `gradlew publish`.  This will publish the plugin to a local maven repository directory `[PLUGIN PROJECT ROOT]/build/test-maven-repo`.  Now you can use the local plugin in your own project by setting the following in your project's build files.
 
-Use the local plugin in your own project by setting the following in your project's build file.
+> build.gradle
 
 ```
-buildscript {
-    dependencies {
-        classpath files('[YOUR PATH]/gradle-plugin-docker/build/libs/gradle-plugin-docker-[LATEST VERSION].jar')
-    }
+plugins {
+    id 'com.sidneysimmons.gradle-plugin-docker' version '[PLUGIN VERSION]'
 }
-apply plugin: com.sidneysimmons.gradleplugindocker.DockerPlugin
+```
+
+> settings.gradle
+
+```
+pluginManagement {
+	repositories {
+		maven {
+			url '[PLUGIN PROJECT ROOT]/build/test-maven-repo'
+		}
+		gradlePluginPortal()
+	}
+}
 ```
 
 ## License

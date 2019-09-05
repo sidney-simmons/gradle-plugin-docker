@@ -5,6 +5,8 @@ plugins {
 
 group = 'com.sidneysimmons'
 version = '0.0.1'
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 pluginBundle {
 	website = 'https://github.com/sidney-simmons/gradle-plugin-docker'

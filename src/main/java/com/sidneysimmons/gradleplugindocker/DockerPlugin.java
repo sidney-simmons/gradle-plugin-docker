@@ -13,20 +13,20 @@ import org.gradle.api.tasks.TaskContainer;
  */
 public class DockerPlugin implements Plugin<Project> {
 
-	@Override
-	public void apply(Project project) {
-		// Docker version
-		TaskContainer taskContainer = project.getTasks();
-		taskContainer.create(DockerVersionTask.NAME, DockerVersionTask.class, task -> {
-			task.setGroup(DockerVersionTask.GROUP);
-			task.setDescription(DockerVersionTask.DESCRIPTION);
-		});
+    @Override
+    public void apply(Project project) {
+        // Docker version
+        TaskContainer taskContainer = project.getTasks();
+        taskContainer.create(DockerVersionTask.NAME, DockerVersionTask.class, task -> {
+            task.setGroup(DockerVersionTask.GROUP);
+            task.setDescription(DockerVersionTask.DESCRIPTION);
+        });
 
-		// Docker compose version
-		taskContainer.create(DockerComposeVersionTask.NAME, DockerComposeVersionTask.class, task -> {
-			task.setGroup(DockerComposeVersionTask.GROUP);
-			task.setDescription(DockerComposeVersionTask.DESCRIPTION);
-		});
-	}
+        // Docker compose version
+        taskContainer.create(DockerComposeVersionTask.NAME, DockerComposeVersionTask.class, task -> {
+            task.setGroup(DockerComposeVersionTask.GROUP);
+            task.setDescription(DockerComposeVersionTask.DESCRIPTION);
+        });
+    }
 
 }

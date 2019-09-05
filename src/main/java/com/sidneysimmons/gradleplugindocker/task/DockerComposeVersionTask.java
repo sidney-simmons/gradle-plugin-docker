@@ -16,33 +16,33 @@ import org.gradle.api.tasks.TaskExecutionException;
  */
 public class DockerComposeVersionTask extends DefaultTask {
 
-	private Logger logger = Logging.getLogger(getClass());
+    private Logger logger = Logging.getLogger(getClass());
 
-	public static final String GROUP = "docker";
-	public static final String NAME = "dockerComposeVersion";
-	public static final String DESCRIPTION = "Prints system docker-compose version.";
+    public static final String GROUP = "docker";
+    public static final String NAME = "dockerComposeVersion";
+    public static final String DESCRIPTION = "Prints system docker-compose version.";
 
-	@TaskAction
-	void action() throws IOException, InterruptedException {
-		// Start the process
-		ProcessBuilder processBuilder = new ProcessBuilder();
-		processBuilder.redirectErrorStream(true);
-		processBuilder.command("docker-compose", "--version");
-		Process process = processBuilder.start();
+    @TaskAction
+    void action() throws IOException, InterruptedException {
+        // Start the process
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        processBuilder.redirectErrorStream(true);
+        processBuilder.command("docker-compose", "--version");
+        Process process = processBuilder.start();
 
-		// Read in the result
-		try (BufferedReader inputReader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-			String line = null;
-			while ((line = inputReader.readLine()) != null) {
-				logger.lifecycle(line);
-			}
-		}
+        // Read in the result
+        try (BufferedReader inputReader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+            String line = null;
+            while ((line = inputReader.readLine()) != null) {
+                logger.lifecycle(line);
+            }
+        }
 
-		// Wait for the process to finish
-		int exitCode = process.waitFor();
-		if (exitCode != 0) {
-			throw new TaskExecutionException(this, new RuntimeException("Task exited with error code: " + exitCode));
-		}
-	}
+        // Wait for the process to finish
+        int exitCode = process.waitFor();
+        if (exitCode != 0) {
+            throw new TaskExecutionException(this, new RuntimeException("Task exited with error code: " + exitCode));
+        }
+    }
 
 }

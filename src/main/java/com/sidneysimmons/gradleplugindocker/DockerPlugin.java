@@ -1,5 +1,7 @@
 package com.sidneysimmons.gradleplugindocker;
 
+import com.sidneysimmons.gradleplugindocker.task.DockerComposeDownTask;
+import com.sidneysimmons.gradleplugindocker.task.DockerComposeUpTask;
 import com.sidneysimmons.gradleplugindocker.task.DockerComposeVersionTask;
 import com.sidneysimmons.gradleplugindocker.task.DockerVersionTask;
 import org.gradle.api.Plugin;
@@ -26,6 +28,18 @@ public class DockerPlugin implements Plugin<Project> {
         taskContainer.create(DockerComposeVersionTask.NAME, DockerComposeVersionTask.class, task -> {
             task.setGroup(DockerComposeVersionTask.GROUP);
             task.setDescription(DockerComposeVersionTask.DESCRIPTION);
+        });
+
+        // Docker compose up
+        taskContainer.create(DockerComposeUpTask.NAME, DockerComposeUpTask.class, task -> {
+            task.setGroup(DockerComposeUpTask.GROUP);
+            task.setDescription(DockerComposeUpTask.DESCRIPTION);
+        });
+
+        // Docker compose down
+        taskContainer.create(DockerComposeDownTask.NAME, DockerComposeDownTask.class, task -> {
+            task.setGroup(DockerComposeDownTask.GROUP);
+            task.setDescription(DockerComposeDownTask.DESCRIPTION);
         });
     }
 

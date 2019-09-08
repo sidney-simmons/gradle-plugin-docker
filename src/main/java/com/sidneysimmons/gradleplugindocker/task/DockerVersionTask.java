@@ -1,11 +1,8 @@
 package com.sidneysimmons.gradleplugindocker.task;
 
-import java.io.BufferedReader;
+import com.sidneysimmons.gradleplugindocker.util.PluginUtil;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import org.gradle.api.DefaultTask;
-import org.gradle.api.logging.Logger;
-import org.gradle.api.logging.Logging;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.TaskExecutionException;
 
@@ -15,8 +12,6 @@ import org.gradle.api.tasks.TaskExecutionException;
  * @author Sidney Simmons
  */
 public class DockerVersionTask extends DefaultTask {
-
-    private Logger logger = Logging.getLogger(getClass());
 
     public static final String GROUP = "docker";
     public static final String NAME = "dockerVersion";
@@ -31,12 +26,7 @@ public class DockerVersionTask extends DefaultTask {
         Process process = processBuilder.start();
 
         // Read in the result
-        try (BufferedReader inputReader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-            String line = null;
-            while ((line = inputReader.readLine()) != null) {
-                logger.lifecycle(line);
-            }
-        }
+        PluginUtil.logProcessOutput(process, getLogger());
 
         // Wait for the process to finish
         int exitCode = process.waitFor();

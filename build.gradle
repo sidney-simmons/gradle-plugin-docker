@@ -9,6 +9,15 @@ version = '0.0.1'
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
+repositories {
+    jcenter()
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:3.0.0'
+}
+
 // Local maven repository publishing (for testing)
 publishing {
     repositories {

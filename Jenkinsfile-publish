@@ -19,6 +19,7 @@ pipeline {
             }
             steps {
                 //sh "./gradlew -Dgradle.publish.key=${PUBLISH_KEY} -Dgradle.publish.secret=${PUBLISH_SECRET} publishPlugins"
+                sh 'pwd'
             }
         }
         stage('Tag Release') {

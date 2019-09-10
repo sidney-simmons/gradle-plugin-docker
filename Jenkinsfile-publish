@@ -18,8 +18,7 @@ pipeline {
                 PUBLISH_SECRET = credentials('gradle.publish.secret') 
             }
             steps {
-                //sh "./gradlew -Dgradle.publish.key=${PUBLISH_KEY} -Dgradle.publish.secret=${PUBLISH_SECRET} publishPlugins"
-                sh 'pwd'
+                sh "./gradlew -Dgradle.publish.key=${PUBLISH_KEY} -Dgradle.publish.secret=${PUBLISH_SECRET} publishPlugins"
             }
         }
         stage('Tag Release') {

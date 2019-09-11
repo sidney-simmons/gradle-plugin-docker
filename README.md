@@ -7,6 +7,8 @@ gradle-plugin-docker is a custom gradle plugin for integrating with Docker.
 ```
 Docker tasks
 ------------
+dockerComposeDown - Run docker-compose down.
+dockerComposeUp - Run docker-compose up.
 dockerComposeVersion - Prints system docker-compose version.
 dockerVersion - Prints system docker version.
 ```

@@ -1,5 +1,6 @@
 package com.sidneysimmons.gradleplugindocker;
 
+import com.sidneysimmons.gradleplugindocker.extension.DockerExtension;
 import com.sidneysimmons.gradleplugindocker.task.DockerComposeBuildTask;
 import com.sidneysimmons.gradleplugindocker.task.DockerComposeDownTask;
 import com.sidneysimmons.gradleplugindocker.task.DockerComposeUpTask;
@@ -18,31 +19,30 @@ public class DockerPlugin implements Plugin<Project> {
 
     @Override
     public void apply(Project project) {
+        DockerExtension dockerExtension = project.getExtensions().create(DockerExtension.NAME, DockerExtension.class, project);
         TaskContainer taskContainer = project.getTasks();
 
-        // Docker version
-        taskContainer.create(DockerVersionTask.NAME, DockerVersionTask.class, task -> {
+        // Version tasks
+        taskContainer.register(DockerVersionTask.NAME, DockerVersionTask.class, task -> {
 
         });
-
-        // Docker compose version
-        taskContainer.create(DockerComposeVersionTask.NAME, DockerComposeVersionTask.class, task -> {
+        taskContainer.register(DockerComposeVersionTask.NAME, DockerComposeVersionTask.class, task -> {
 
         });
 
         // Docker compose up
-        taskContainer.create(DockerComposeUpTask.NAME, DockerComposeUpTask.class, task -> {
-
+        taskContainer.register(DockerComposeUpTask.NAME, DockerComposeUpTask.class, task -> {
+            task.getMachineName().set(dockerExtension.getMachineName());
         });
 
         // Docker compose down
-        taskContainer.create(DockerComposeDownTask.NAME, DockerComposeDownTask.class, task -> {
-
+        taskContainer.register(DockerComposeDownTask.NAME, DockerComposeDownTask.class, task -> {
+            task.getMachineName().set(dockerExtension.getMachineName());
         });
 
         // Docker compose build
-        taskContainer.create(DockerComposeBuildTask.NAME, DockerComposeBuildTask.class, task -> {
-
+        taskContainer.register(DockerComposeBuildTask.NAME, DockerComposeBuildTask.class, task -> {
+            task.getMachineName().set(dockerExtension.getMachineName());
         });
     }
 

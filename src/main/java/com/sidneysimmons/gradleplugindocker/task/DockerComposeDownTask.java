@@ -2,7 +2,6 @@ package com.sidneysimmons.gradleplugindocker.task;
 
 import com.sidneysimmons.gradleplugindocker.util.PluginUtil;
 import java.io.IOException;
-import org.gradle.api.DefaultTask;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.TaskExecutionException;
 
@@ -11,7 +10,7 @@ import org.gradle.api.tasks.TaskExecutionException;
  * 
  * @author Sidney Simmons
  */
-public class DockerComposeDownTask extends DefaultTask {
+public class DockerComposeDownTask extends DockerTask {
 
     public static final String GROUP = "docker";
     public static final String NAME = "dockerComposeDown";
@@ -22,6 +21,7 @@ public class DockerComposeDownTask extends DefaultTask {
         // Start the process
         ProcessBuilder processBuilder = new ProcessBuilder();
         processBuilder.redirectErrorStream(true);
+        processBuilder.environment().putAll(getDockerMachineEnvironmentVariables());
         processBuilder.command("docker-compose", "--no-ansi", "down");
         Process process = processBuilder.start();
 

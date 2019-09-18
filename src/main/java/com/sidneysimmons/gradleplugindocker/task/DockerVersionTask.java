@@ -35,4 +35,14 @@ public class DockerVersionTask extends DefaultTask {
         }
     }
 
+    @Override
+    public String getGroup() {
+        return GROUP;
+    }
+
+    @Override
+    public String getDescription() {
+        return DESCRIPTION;
+    }
+
 }

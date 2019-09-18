@@ -35,4 +35,14 @@ public class DockerComposeUpTask extends DefaultTask {
         }
     }
 
+    @Override
+    public String getGroup() {
+        return GROUP;
+    }
+
+    @Override
+    public String getDescription() {
+        return DESCRIPTION;
+    }
+
 }

@@ -50,5 +50,17 @@ pluginManagement {
 }
 ```
 
+## Configuration
+
+```
+docker {
+    machineName = 'my-docker-machine'
+}
+```
+
+| Property | Type | Description |
+| --- | --- | --- |
+| machineName | String | The name of the docker-machine with which to run commands against. Required for some earlier versions of Windows that are using Docker Toolbox. Optional. |
+
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

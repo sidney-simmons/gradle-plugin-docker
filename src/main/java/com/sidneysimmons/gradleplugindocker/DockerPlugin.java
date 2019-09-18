@@ -1,5 +1,6 @@
 package com.sidneysimmons.gradleplugindocker;
 
+import com.sidneysimmons.gradleplugindocker.extension.DockerExtension;
 import com.sidneysimmons.gradleplugindocker.task.DockerComposeBuildTask;
 import com.sidneysimmons.gradleplugindocker.task.DockerComposeDownTask;
 import com.sidneysimmons.gradleplugindocker.task.DockerComposeUpTask;
@@ -18,35 +19,30 @@ public class DockerPlugin implements Plugin<Project> {
 
     @Override
     public void apply(Project project) {
-        // Docker version
+        DockerExtension dockerExtension = project.getExtensions().create(DockerExtension.NAME, DockerExtension.class, project);
         TaskContainer taskContainer = project.getTasks();
-        taskContainer.create(DockerVersionTask.NAME, DockerVersionTask.class, task -> {
-            task.setGroup(DockerVersionTask.GROUP);
-            task.setDescription(DockerVersionTask.DESCRIPTION);
-        });
 
-        // Docker compose version
-        taskContainer.create(DockerComposeVersionTask.NAME, DockerComposeVersionTask.class, task -> {
-            task.setGroup(DockerComposeVersionTask.GROUP);
-            task.setDescription(DockerComposeVersionTask.DESCRIPTION);
+        // Version tasks
+        taskContainer.register(DockerVersionTask.NAME, DockerVersionTask.class, task -> {
+
+        });
+        taskContainer.register(DockerComposeVersionTask.NAME, DockerComposeVersionTask.class, task -> {
+
         });
 
         // Docker compose up
-        taskContainer.create(DockerComposeUpTask.NAME, DockerComposeUpTask.class, task -> {
-            task.setGroup(DockerComposeUpTask.GROUP);
-            task.setDescription(DockerComposeUpTask.DESCRIPTION);
+        taskContainer.register(DockerComposeUpTask.NAME, DockerComposeUpTask.class, task -> {
+            task.getMachineName().set(dockerExtension.getMachineName());
         });
 
         // Docker compose down
-        taskContainer.create(DockerComposeDownTask.NAME, DockerComposeDownTask.class, task -> {
-            task.setGroup(DockerComposeDownTask.GROUP);
-            task.setDescription(DockerComposeDownTask.DESCRIPTION);
+        taskContainer.register(DockerComposeDownTask.NAME, DockerComposeDownTask.class, task -> {
+            task.getMachineName().set(dockerExtension.getMachineName());
         });
 
         // Docker compose build
-        taskContainer.create(DockerComposeBuildTask.NAME, DockerComposeBuildTask.class, task -> {
-            task.setGroup(DockerComposeBuildTask.GROUP);
-            task.setDescription(DockerComposeBuildTask.DESCRIPTION);
+        taskContainer.register(DockerComposeBuildTask.NAME, DockerComposeBuildTask.class, task -> {
+            task.getMachineName().set(dockerExtension.getMachineName());
         });
     }
 

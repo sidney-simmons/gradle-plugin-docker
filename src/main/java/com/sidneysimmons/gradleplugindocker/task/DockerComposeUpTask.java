@@ -2,7 +2,6 @@ package com.sidneysimmons.gradleplugindocker.task;
 
 import com.sidneysimmons.gradleplugindocker.util.PluginUtil;
 import java.io.IOException;
-import org.gradle.api.DefaultTask;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.TaskExecutionException;
 
@@ -11,7 +10,7 @@ import org.gradle.api.tasks.TaskExecutionException;
  * 
  * @author Sidney Simmons
  */
-public class DockerComposeUpTask extends DefaultTask {
+public class DockerComposeUpTask extends DockerTask {
 
     public static final String GROUP = "docker";
     public static final String NAME = "dockerComposeUp";
@@ -22,6 +21,7 @@ public class DockerComposeUpTask extends DefaultTask {
         // Start the process
         ProcessBuilder processBuilder = new ProcessBuilder();
         processBuilder.redirectErrorStream(true);
+        processBuilder.environment().putAll(getDockerMachineEnvironmentVariables());
         processBuilder.command("docker-compose", "--no-ansi", "up", "--detach");
         Process process = processBuilder.start();
 
@@ -33,6 +33,16 @@ public class DockerComposeUpTask extends DefaultTask {
         if (exitCode != 0) {
             throw new TaskExecutionException(this, new RuntimeException("Task exited with error code: " + exitCode));
         }
+    }
+
+    @Override
+    public String getGroup() {
+        return GROUP;
+    }
+
+    @Override
+    public String getDescription() {
+        return DESCRIPTION;
     }
 
 }

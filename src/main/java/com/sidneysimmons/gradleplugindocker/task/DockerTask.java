@@ -8,6 +8,9 @@ import java.util.Map;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.plugins.ExtraPropertiesExtension;
 import org.gradle.api.provider.Property;
+import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.Internal;
+import org.gradle.api.tasks.Optional;
 
 /**
  * Custom docker task type to deal with connecting to a docker machine.
@@ -16,6 +19,8 @@ import org.gradle.api.provider.Property;
  */
 public class DockerTask extends DefaultTask {
 
+    @Input
+    @Optional
     private Property<String> machineName = getProject().getObjects().property(String.class);
 
     /**
@@ -35,6 +40,7 @@ public class DockerTask extends DefaultTask {
      * @throws IOException thrown if there are problems reading the environment variables
      * @throws InterruptedException thrown if there are problems reading the environment variables
      */
+    @Internal
     @SuppressWarnings("unchecked")
     public Map<String, String> getDockerMachineEnvironmentVariables() throws IOException, InterruptedException {
         // Return if the machine name isn't set

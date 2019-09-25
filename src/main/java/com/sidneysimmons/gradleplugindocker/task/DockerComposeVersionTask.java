@@ -3,6 +3,7 @@ package com.sidneysimmons.gradleplugindocker.task;
 import com.sidneysimmons.gradleplugindocker.util.PluginUtil;
 import java.io.IOException;
 import org.gradle.api.DefaultTask;
+import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.TaskExecutionException;
 
@@ -36,11 +37,13 @@ public class DockerComposeVersionTask extends DefaultTask {
     }
 
     @Override
+    @Internal
     public String getGroup() {
         return GROUP;
     }
 
     @Override
+    @Internal
     public String getDescription() {
         return DESCRIPTION;
     }

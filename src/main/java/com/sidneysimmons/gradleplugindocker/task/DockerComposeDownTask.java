@@ -22,7 +22,7 @@ public class DockerComposeDownTask extends DockerTask {
         // Start the process
         ProcessBuilder processBuilder = new ProcessBuilder();
         processBuilder.redirectErrorStream(true);
-        processBuilder.environment().putAll(getDockerMachineEnvironmentVariables());
+        processBuilder.environment().putAll(getEnvironmentVariables());
         processBuilder.command("docker-compose", "--no-ansi", "down");
         Process process = processBuilder.start();
 

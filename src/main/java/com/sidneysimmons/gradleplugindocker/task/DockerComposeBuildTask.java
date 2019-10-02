@@ -22,7 +22,7 @@ public class DockerComposeBuildTask extends DockerTask {
         // Start the process
         ProcessBuilder processBuilder = new ProcessBuilder();
         processBuilder.redirectErrorStream(true);
-        processBuilder.environment().putAll(getDockerMachineEnvironmentVariables());
+        processBuilder.environment().putAll(getEnvironmentVariables());
         processBuilder.command("docker-compose", "--no-ansi", "build");
         Process process = processBuilder.start();
 

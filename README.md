@@ -19,12 +19,18 @@ dockerVersion - Prints system docker version.
 ``` gradle
 docker {
     machineName = 'my-docker-machine'
+    environment('POSTGRES_USER', 'my-pg-user')
+    environment('POSTGRES_PASSWORD', 'my-pg-password')
 }
 ```
 
 | Property | Type | Description |
 | --- | --- | --- |
 | machineName | String | The name of the docker-machine with which to run commands against. Required for some earlier versions of Windows that are using Docker Toolbox. Optional. |
+
+| Method | Input | Description |
+| --- | --- | --- |
+| environment | String key, String value | Add a key/value pair to the map of extra environment variables. Optional. These extra environment variables are included in the docker commands. For example - they can be used in a docker-compose.yml file as ${POSTGRES_USER} |
 
 ## Applying the Plugin
 

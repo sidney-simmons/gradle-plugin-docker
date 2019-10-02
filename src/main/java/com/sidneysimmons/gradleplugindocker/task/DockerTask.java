@@ -1,5 +1,6 @@
 package com.sidneysimmons.gradleplugindocker.task;
 
+import com.sidneysimmons.gradleplugindocker.extension.DockerExtension;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.plugins.ExtraPropertiesExtension;
+import org.gradle.api.provider.MapProperty;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.Internal;
@@ -23,6 +25,11 @@ public class DockerTask extends DefaultTask {
     @Optional
     private Property<String> machineName = getProject().getObjects().property(String.class);
 
+    @Input
+    @Optional
+    private MapProperty<String, String> extraEnvironmentVariables = getProject().getObjects().mapProperty(String.class,
+            String.class);
+
     /**
      * Get the machine name.
      * 
@@ -33,8 +40,36 @@ public class DockerTask extends DefaultTask {
     }
 
     /**
-     * Get docker machine environment variables for this task. First checks if the machine's variables are already cached.
-     * An empty map is returned if the machine name isn't configured.
+     * Get the extra environment variables.
+     * 
+     * @return the extra environment variables
+     */
+    public MapProperty<String, String> getExtraEnvironmentVariables() {
+        return extraEnvironmentVariables;
+    }
+
+    /**
+     * Get all environment variables. This includes any docker machine specific environment variables
+     * and any extra environment variables configured through the {@link DockerExtension} extension.
+     * 
+     * @return a map of all environment variables
+     * @throws IOException thrown if there are problems reading the environment variables
+     * @throws InterruptedException thrown if there are problems reading the environment variables
+     */
+    @Internal
+    public Map<String, String> getEnvironmentVariables() throws IOException, InterruptedException {
+        // Put the docker machine environment variables
+        Map<String, String> environmentVariables = new HashMap<>();
+        environmentVariables.putAll(getDockerMachineEnvironmentVariables());
+
+        // Put the extra environment variables
+        environmentVariables.putAll(extraEnvironmentVariables.getOrElse(new HashMap<>()));
+        return environmentVariables;
+    }
+
+    /**
+     * Get docker machine environment variables for this task. First checks if the machine's variables
+     * are already cached. An empty map is returned if the machine name isn't configured.
      * 
      * @return the machine environment variables if configured, empty map otherwise
      * @throws IOException thrown if there are problems reading the environment variables
@@ -53,7 +88,8 @@ public class DockerTask extends DefaultTask {
         ExtraPropertiesExtension extraProperties = getProject().getExtensions().getExtraProperties();
         String propertyName = "dockerMachineEnvironmentVariables-" + machineNameString;
         if (extraProperties.has(propertyName)) {
-            getLogger().lifecycle("Using cached docker-machine env variables for machine \"" + machineNameString + "\"...");
+            getLogger().lifecycle(
+                    "Using cached docker-machine env variables for machine \"" + machineNameString + "\"...");
             return (Map<String, String>) extraProperties.get(propertyName);
         }
 
@@ -71,7 +107,8 @@ public class DockerTask extends DefaultTask {
      * @throws IOException thrown if there are problems reading the environment variables
      * @throws InterruptedException thrown if there are problems reading the environment variables
      */
-    private Map<String, String> readDockerMachineEnvironmentVariables(String machineNameString) throws IOException, InterruptedException {
+    private Map<String, String> readDockerMachineEnvironmentVariables(String machineNameString)
+            throws IOException, InterruptedException {
         // Create the process
         getLogger().lifecycle("Reading docker-machine env variables for machine \"" + machineNameString + "\"...");
         ProcessBuilder processBuilder = new ProcessBuilder();
@@ -95,7 +132,8 @@ public class DockerTask extends DefaultTask {
         // Wait for the process to complete
         int exitCode = process.waitFor();
         if (exitCode != 0) {
-            throw new RuntimeException("Cannot get docker-machine environment variables. Process exited with error code: " + exitCode);
+            throw new RuntimeException(
+                    "Cannot get docker-machine environment variables. Process exited with error code: " + exitCode);
         }
         return environmentVariables;
     }

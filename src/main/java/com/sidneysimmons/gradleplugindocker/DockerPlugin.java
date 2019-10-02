@@ -19,7 +19,8 @@ public class DockerPlugin implements Plugin<Project> {
 
     @Override
     public void apply(Project project) {
-        DockerExtension dockerExtension = project.getExtensions().create(DockerExtension.NAME, DockerExtension.class, project);
+        DockerExtension dockerExtension = project.getExtensions().create(DockerExtension.NAME, DockerExtension.class,
+                project);
         TaskContainer taskContainer = project.getTasks();
 
         // Version tasks
@@ -33,16 +34,19 @@ public class DockerPlugin implements Plugin<Project> {
         // Docker compose up
         taskContainer.register(DockerComposeUpTask.NAME, DockerComposeUpTask.class, task -> {
             task.getMachineName().set(dockerExtension.getMachineName());
+            task.getExtraEnvironmentVariables().set(dockerExtension.getExtraEnvironmentVariables());
         });
 
         // Docker compose down
         taskContainer.register(DockerComposeDownTask.NAME, DockerComposeDownTask.class, task -> {
             task.getMachineName().set(dockerExtension.getMachineName());
+            task.getExtraEnvironmentVariables().set(dockerExtension.getExtraEnvironmentVariables());
         });
 
         // Docker compose build
         taskContainer.register(DockerComposeBuildTask.NAME, DockerComposeBuildTask.class, task -> {
             task.getMachineName().set(dockerExtension.getMachineName());
+            task.getExtraEnvironmentVariables().set(dockerExtension.getExtraEnvironmentVariables());
         });
     }
 

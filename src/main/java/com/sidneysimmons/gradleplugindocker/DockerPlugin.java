@@ -35,6 +35,7 @@ public class DockerPlugin implements Plugin<Project> {
         taskContainer.register(DockerComposeUpTask.NAME, DockerComposeUpTask.class, task -> {
             task.getMachineName().set(dockerExtension.getMachineName());
             task.getExtraEnvironmentVariables().set(dockerExtension.getExtraEnvironmentVariables());
+            task.getServicesToScale().set(dockerExtension.getServicesToScale());
         });
 
         // Docker compose down

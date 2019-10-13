@@ -18,9 +18,17 @@ dockerVersion - Prints system docker version.
 
 ``` gradle
 docker {
+    // Sets the name of an optional docker machine
     machineName = 'my-docker-machine'
+    
+    // Sets extra environment variables
     environment('POSTGRES_USER', 'my-pg-user')
     environment('POSTGRES_PASSWORD', 'my-pg-password')
+    
+    // Tells docker you want a certain number of instances for a
+    // given service (see --scale)
+    scale('manager-service', 2)
+    scale('worker-service', 3)
 }
 ```
 
@@ -31,6 +39,7 @@ docker {
 | Method | Input | Description |
 | --- | --- | --- |
 | environment | String key, String value | Add a key/value pair to the map of extra environment variables. Optional. These extra environment variables are included in the docker commands. For example - they can be used in a docker-compose.yml file as ${POSTGRES_USER} |
+| scale | String service, Integer numberOfNodes | Tells Docker to scale a particular service to the given number of instances. |
 
 ## Applying the Plugin
 

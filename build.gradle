@@ -1,11 +1,11 @@
 plugins {
-    id "com.gradle.plugin-publish" version '0.10.1'
-    id 'java-gradle-plugin'
-    id 'maven-publish'
+    id "com.gradle.plugin-publish" version "0.10.1"
+    id "java-gradle-plugin"
+    id "maven-publish"
 }
 
-group = 'com.sidneysimmons'
-version = '0.0.7'
+group = "com.sidneysimmons"
+version = "0.0.7"
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
@@ -14,34 +14,34 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:3.0.0'
+    testImplementation "junit:junit:4.12"
+    testImplementation "org.mockito:mockito-core:3.0.0"
 }
 
 // Local maven repository publishing (for testing)
 publishing {
     repositories {
         maven {
-            url './build/test-maven-repo'
+            url "./build/test-maven-repo"
         }
     }
 }
 
 // Gradle Plugin Portal bundle details
 pluginBundle {
-    website = 'https://github.com/sidney-simmons/gradle-plugin-docker'
-    vcsUrl = 'https://github.com/sidney-simmons/gradle-plugin-docker'
-    tags = ['docker', 'docker-compose']
+    website = "https://github.com/sidney-simmons/gradle-plugin-docker"
+    vcsUrl = "https://github.com/sidney-simmons/gradle-plugin-docker"
+    tags = ["docker", "docker-compose"]
 }
 
 // Gradle Plugin Portal plugin details
 gradlePlugin {
     plugins {
         dockerPlugin {
-            id = 'com.sidneysimmons.gradle-plugin-docker'
-            displayName = 'Docker Plugin' 
-            description = 'gradle-plugin-docker is a custom gradle plugin for integrating with Docker.' 
-            implementationClass = 'com.sidneysimmons.gradleplugindocker.DockerPlugin'
+            id = "com.sidneysimmons.gradle-plugin-docker"
+            displayName = "Docker Plugin" 
+            description = "gradle-plugin-docker is a custom gradle plugin for integrating with Docker." 
+            implementationClass = "com.sidneysimmons.gradleplugindocker.DockerPlugin"
         }
     }
 }

@@ -1,4 +1,6 @@
-# gradle-plugin-docker
+# gradle-plugin-docker (archived)
+
+*Archived and no longer in active development.*
 
 gradle-plugin-docker is a custom gradle plugin for integrating with Docker.
 
